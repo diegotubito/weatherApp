@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 protocol ServiceManagerProtocol {
-    func retrieveData(url: String, result: @escaping(City?, Error?) -> Void)
+    func retrieveJSON(url: String, result: @escaping([String : Any]?, Error?) -> Void)
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChosenCityListViewModel: CityListViewModelContract {
+class CityListViewModel: CityListViewModelContract {
   
     
     var model: CityListModel!

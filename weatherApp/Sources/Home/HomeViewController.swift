@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MainViewController : UIViewController {
+class HomeViewController : UIViewController {
     
     override func viewDidLoad() {
         super .viewDidLoad()
@@ -28,7 +28,7 @@ class MainViewController : UIViewController {
         super .prepare(for: segue, sender: sender)
         
         if let controller = segue.destination as? CityListViewController {
-            controller.viewModel = ChosenCityListViewModel(withView: controller, services: ServiceManager())
+            controller.viewModel = CityListViewModel(withView: controller, services: ServiceManager())
             
         }
     }

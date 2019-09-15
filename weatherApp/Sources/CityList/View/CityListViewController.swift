@@ -69,7 +69,7 @@ class CityListViewController: UIViewController {
     }
     
     private func registerCells() {
-        tableView.register(ChosenCityCell.nib, forCellReuseIdentifier: ChosenCityCell.identifier)
+        tableView.register(CityListCell.nib, forCellReuseIdentifier: CityListCell.identifier)
     }
     
     private func loaderInitialization() {
@@ -157,7 +157,7 @@ extension CityListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: ChosenCityCell.identifier) as? ChosenCityCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: CityListCell.identifier) as? CityListCell {
             
             let register = viewModel.model.cities[indexPath.row]
             let id = register.id

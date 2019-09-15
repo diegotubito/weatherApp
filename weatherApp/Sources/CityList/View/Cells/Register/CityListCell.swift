@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChosenCityCell: UITableViewCell {
+class CityListCell: UITableViewCell {
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var temperatureInfoView: UIView!
     @IBOutlet weak var titleLabel: UILabel!

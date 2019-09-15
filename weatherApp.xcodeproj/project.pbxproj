@@ -72,8 +72,8 @@
 		6595C3032325558B00921472 /* MyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExtensions.swift; sourceTree = "<group>"; };
 		6595C31223258ABE00921472 /* RegisterCityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCityCell.swift; sourceTree = "<group>"; };
 		6595C31323258ABE00921472 /* RegisterCityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterCityCell.xib; sourceTree = "<group>"; };
-		6595C318232595E800921472 /* ChosenCityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenCityCell.swift; sourceTree = "<group>"; };
-		6595C319232595E800921472 /* ChosenCityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChosenCityCell.xib; sourceTree = "<group>"; };
+		6595C318232595E800921472 /* ChosenCityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChosenCityCell.swift; path = Register/ChosenCityCell.swift; sourceTree = "<group>"; };
+		6595C319232595E800921472 /* ChosenCityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChosenCityCell.xib; path = Register/ChosenCityCell.xib; sourceTree = "<group>"; };
 		6596B36C232C70D80054117F /* cities_20000.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities_20000.json; sourceTree = "<group>"; };
 		6596B36E232DCFC80054117F /* PersistedDataSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedDataSingleton.swift; sourceTree = "<group>"; };
 		65B4694E231B40A600B8E442 /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,18 +232,10 @@
 		6595C316232595CC00921472 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6595C317232595D400921472 /* Register */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		6595C317232595D400921472 /* Register */ = {
-			isa = PBXGroup;
-			children = (
 				6595C318232595E800921472 /* ChosenCityCell.swift */,
 				6595C319232595E800921472 /* ChosenCityCell.xib */,
 			);
-			path = Register;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		6596B370232DD4710054117F /* Home */ = {
@@ -331,8 +323,8 @@
 		65D27DBB231C19D10027F195 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6595C2E52322B34100921472 /* ChosenCityList.swift */,
 				6595C316232595CC00921472 /* Cells */,
+				6595C2E52322B34100921472 /* ChosenCityList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

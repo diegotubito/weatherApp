@@ -24,7 +24,7 @@ class PersistedDataManager {
                 return registers
                 
             } catch {
-                print("errorr")
+                print(error.localizedDescription)
             }
         }
         

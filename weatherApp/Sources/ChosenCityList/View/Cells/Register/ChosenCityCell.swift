@@ -12,14 +12,14 @@ class ChosenCityCell: UITableViewCell {
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var temperatureInfoView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        temperatureInfoView.layer.cornerRadius = temperatureInfoView.frame.height / 2
-        temperatureInfoView.layer.backgroundColor = UIColor.blue.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

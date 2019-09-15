@@ -9,15 +9,16 @@
 import Foundation
 import UIKit
 
-class ChosenCityListViewController: UIViewController {
+class CityListViewController: UIViewController {
   
     @IBOutlet weak var tableView : UITableView!
     
-    var viewModel : ChosenCityListViewModelContract!
+    var viewModel : CityListViewModelContract!
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super .viewDidLoad()
+        
         
         //Loader init, used when loading from the internet.
         loaderInitialization()
@@ -31,8 +32,6 @@ class ChosenCityListViewController: UIViewController {
         //button item for adding new city
         addPlusButton()
         
-        //load persisted cities
-        viewModel.loadStoreCities()
     }
     
     
@@ -40,6 +39,13 @@ class ChosenCityListViewController: UIViewController {
         super .viewWillAppear(animated)
         
         navigationItem.title = "Your Cities"
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200
+        
+        //load persisted cities
+        viewModel.loadStoreCities()
+        
     }
     
     private func addRefresh() {
@@ -56,8 +62,6 @@ class ChosenCityListViewController: UIViewController {
     
     @objc private func refreshWeatherData(_ sender: Any) {
         // Fetch Weather Data
-        
-        viewModel.resetCityTemp()
         
         viewModel.loadStoreCities()
         self.refreshControl.endRefreshing()
@@ -99,15 +103,19 @@ class ChosenCityListViewController: UIViewController {
         if let controller = segue.destination as? AddCityViewController {
             controller.viewModel = AddCityViewModel(withView: controller)
             controller.onSelectedCity = { selectedNewCity in
-                self.viewModel.addNewCity(selectedNewCity)
-
+                self.viewModel.addNewCity(selectedNewCity, finished: { (isNewCityAdded) in
+                    if isNewCityAdded {
+                        let index = IndexPath(row: self.viewModel.model.cities.count - 1, section: 0)
+                        self.tableView.insertRows(at: [index], with: .automatic)
+                    }
+                })
             }
         }
     }
 }
 
 
-extension ChosenCityListViewController: ChosenCityListViewContract {
+extension CityListViewController: CityListViewContract {
     func showLoading() {
         DispatchQueue.main.async {
             DDBarLoader.showLoading(controller: self, message: "")
@@ -131,6 +139,7 @@ extension ChosenCityListViewController: ChosenCityListViewContract {
             self.present(alert, animated: true, completion: nil)
             
         }
+        
     }
     
     func reloadList() {
@@ -141,7 +150,7 @@ extension ChosenCityListViewController: ChosenCityListViewContract {
     
 }
 
-extension ChosenCityListViewController: UITableViewDataSource {
+extension CityListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.model.cities.count
     }
@@ -151,19 +160,30 @@ extension ChosenCityListViewController: UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: ChosenCityCell.identifier) as? ChosenCityCell {
             
             let register = viewModel.model.cities[indexPath.row]
+            let id = register.id
             let name : String? = register.city_name
-            let temp : Double? = register.temp
+            let countryName : String = register.country_name ?? ""
+            let stateName : String = register.state_name ?? ""
             
             cell.titleLabel.text = name
-            
-            if let currentTemp = temp {
-                cell.temperatureLabel.text = String(currentTemp.rounded()) + "ºC"
-                cell.activity.stopAnimating()
-            } else {
-                cell.temperatureLabel.text = ""
-                cell.activity.startAnimating()
+            cell.countryLabel.text = countryName
+            cell.stateLabel.text = stateName
+    
+            // get current temp for each cell
+            cell.temperatureLabel.text = ""
+            cell.activity.startAnimating()
+            viewModel.getCurrentTemp(id: id ?? 0, success: { (temp) in
+                DispatchQueue.main.async {
+                    cell.activity.stopAnimating()
+                    cell.temperatureLabel.text = String(Int(temp.rounded())) + "ºC"
+                }
+            }) { (errorMessage) in
+                DispatchQueue.main.async {
+                    cell.activity.stopAnimating()
+                    cell.temperatureLabel.text = "-"
+                }
+                self.showError(errorMessage)
             }
-            
             
             return cell
         }
@@ -183,7 +203,7 @@ extension ChosenCityListViewController: UITableViewDataSource {
 }
 
 
-extension ChosenCityListViewController: UITableViewDelegate {
+extension CityListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "segue_to_detail", sender: viewModel.model.cities[indexPath.row])
         

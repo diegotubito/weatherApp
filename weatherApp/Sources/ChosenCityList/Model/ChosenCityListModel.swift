@@ -8,6 +8,6 @@
 
 import Foundation
 
-class ChosenCityListModel {
+class CityListModel {
     var cities = [City]()
 }

@@ -29,7 +29,7 @@ class DetailViewModel: DetailViewModelContract {
     
     func loadExtended(days: Int) {
         let id = model.selectedRegister.id ?? 0
-        let url = "https://api.weatherbit.io/v2.0/forecast/daily?&units=M&days=\(days)&city_id=\(String(id))&key=\(API_KEY)"
+        let url = "\(API_URL)/forecast/daily?&units=M&days=\(days)&city_id=\(String(id))&key=\(API_KEY)"
         
         _view.showLoading()
         _service.retrieveJSON(url: url) { (json, error) in
@@ -41,7 +41,7 @@ class DetailViewModel: DetailViewModelContract {
             }
             
             guard let jsonConverted = json?["data"] as? [[String : Any]] else {
-                self._view.showError("There's no data")
+                self._view.showError((json?["error"] as? String) ?? "No Data Available")
                 return
             }
             

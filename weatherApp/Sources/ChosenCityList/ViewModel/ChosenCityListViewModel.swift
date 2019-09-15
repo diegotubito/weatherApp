@@ -8,64 +8,67 @@
 
 import Foundation
 
-class ChosenCityListViewModel: ChosenCityListViewModelContract {
+class ChosenCityListViewModel: CityListViewModelContract {
   
     
-    var model: ChosenCityListModel!
-    var _view : ChosenCityListViewContract!
+    var model: CityListModel!
+    var _view : CityListViewContract!
     var _service : ServiceManager!
     
-    required init(withView view: ChosenCityListViewContract, services: ServiceManager) {
+    required init(withView view: CityListViewContract, services: ServiceManager) {
         _view = view
         _service = services
         
-        model = ChosenCityListModel()
+        model = CityListModel()
     }
     
     func loadStoreCities() {
         let cities = PersistedDataManager.loadPersistedCities()
         model.cities = cities
-        getCurrentTemperature()
     }
     
-    func getCurrentTemperature() {
+    func getCurrentTemp(id: Int, success: @escaping (Double) -> (), fail: @escaping (String) -> ()) {
         
-        for (x,city) in model.cities.enumerated() {
-            let id = String(city.id ?? 0)
+        let url = "\(API_URL)/current?city_id=\(String(id))&key=\(API_KEY)"
+        
+        _service.retrieveJSON(url: url) { (json, error) in
             
-            let url = "https://api.weatherbit.io/v2.0/current?city_id=\(id)&key=\(API_KEY)"
+            guard error == nil else {
+                fail(error?.localizedDescription ?? "")
+                return
+            }
             
-            _service.retrieveJSON(url: url) { (json, error) in
-                
-                guard error == nil else {
-                    self._view.showError(error?.localizedDescription ?? "unknown error")
+            guard json?["error"] == nil else {
+                let message = (json?["error"] as? String) ?? ""
+                fail(message)
+                return
+            }
+            
+            guard let jsonConverted = json?["data"] as? [[String : Any]] else {
+                let message = (json?["status_message"] as? String) ?? "No Data Available"
+                fail(message)
+                return
+            }
+            
+            if jsonConverted.count > 0 {
+                if let temp = jsonConverted[0]["app_temp"] as? Double {
+    
+                    success(temp)
                     return
-                }
-                
-                guard let jsonConverted = json?["data"] as? [[String : Any]] else {
-                    self._view.showError("There's no data")
-                    return
-                }
-       
-                if jsonConverted.count > 0 {
-                    if let temp = jsonConverted[0]["app_temp"] as? Double {
-                        self.model.cities[x].temp = temp
-                        self._view.reloadList()
-                    }
                 }
             }
+            fail("unknown error")
         }
     }
     
-    func addNewCity(_ value: City) {
+    func addNewCity(_ value: City, finished: (Bool) -> ()) {
         
         if validateNewCity(value) {
             model.cities.append(value)
-            self._view.reloadList()
-            
             PersistedDataManager.saveCities(cities: model.cities)
-            getCurrentTemperature()
+            finished(true)
         }
+        finished(false)
     }
     
   
@@ -80,14 +83,5 @@ class ChosenCityListViewModel: ChosenCityListViewModelContract {
         return model.cities[index]
     }
     
-    func resetCityTemp() {
-        
-        let cities = model.cities
-        for (x,_) in cities.enumerated() {
-            model.cities[x].temp = nil
-        }
-        self._view.reloadList()
-        
-    }
     
 }

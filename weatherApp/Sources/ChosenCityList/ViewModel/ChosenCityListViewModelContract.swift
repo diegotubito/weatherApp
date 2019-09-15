@@ -9,17 +9,17 @@
 import Foundation
 
 
-protocol ChosenCityListViewModelContract {
-    init(withView view: ChosenCityListViewContract, services: ServiceManager)
-    var model : ChosenCityListModel! {get}
+protocol CityListViewModelContract {
+    init(withView view: CityListViewContract, services: ServiceManager)
+    var model : CityListModel! {get}
     func loadStoreCities()
-    func addNewCity(_ value: City)
+    func addNewCity(_ value: City, finished: (Bool) -> ())
     func getSelectedCity(index: Int) -> City
-    func resetCityTemp()
+    func getCurrentTemp(id: Int, success: @escaping (Double) -> (), fail: @escaping (String) -> ())
     
 }
 
-protocol ChosenCityListViewContract {
+protocol CityListViewContract {
     func showLoading()
     func hideLoading()
     func showError(_ errorMessage: String)

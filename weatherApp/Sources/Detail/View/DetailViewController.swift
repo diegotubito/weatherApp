@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet weak var selectedCity: UILabel!
     @IBOutlet weak var tableView: UITableView!
     var viewModel : DetailViewModelContract!
     
@@ -24,9 +25,10 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
+
+        navigationItem.title = "Extended Forecast"
+        selectedCity.text = viewModel.model.selectedRegister.city_name ?? ""
         
-        navigationItem.title = "Add New City"
-    
         viewModel.loadExtended(days: EXTENDED_DAYS)
     }
     

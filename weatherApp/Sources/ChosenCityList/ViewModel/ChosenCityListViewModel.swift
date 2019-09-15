@@ -9,6 +9,8 @@
 import Foundation
 
 class ChosenCityListViewModel: ChosenCityListViewModelContract {
+  
+    
     var model: ChosenCityListModel!
     var _view : ChosenCityListViewContract!
     var _service : ServiceManager!
@@ -16,31 +18,76 @@ class ChosenCityListViewModel: ChosenCityListViewModelContract {
     required init(withView view: ChosenCityListViewContract, services: ServiceManager) {
         _view = view
         _service = services
+        
+        model = ChosenCityListModel()
     }
     
     func loadStoreCities() {
-        let backgroundQueue = DispatchQueue(label: "Loading Cities", qos: .background)
+        let cities = PersistedDataManager.loadPersistedCities()
+        model.cities = cities
+        getCurrentTemperature()
+    }
+    
+    func getCurrentTemperature() {
         
-        backgroundQueue.async {
-            print("Run on background thread")
+        for (x,city) in model.cities.enumerated() {
+            let id = String(city.id ?? 0)
             
-            self._view.showLoading()
+            let url = "https://api.weatherbit.io/v2.0/current?city_id=\(id)&key=\(API_KEY)"
             
-            let url = "https://api.openweathermap.org/data/2.5/weather?q=Cordoba,ar&APPID=9db6c3acad9c6e42188f966a6596ddc9"
-            self._service.retrieveData(url: url) { (data, error) in
+            _service.retrieveJSON(url: url) { (json, error) in
                 
-                self._view.hideLoading()
-                
-                guard let data = data else {
+                guard error == nil else {
+                    self._view.showError(error?.localizedDescription ?? "unknown error")
                     return
                 }
                 
-                print(data.name)
-                //        print(data.main.pressure)
+                guard let jsonConverted = json?["data"] as? [[String : Any]] else {
+                    self._view.showError("There's no data")
+                    return
+                }
+       
+                if jsonConverted.count > 0 {
+                    if let temp = jsonConverted[0]["app_temp"] as? Double {
+                        self.model.cities[x].temp = temp
+                        self._view.reloadList()
+                    }
+                }
             }
         }
+    }
+    
+    func addNewCity(_ value: City) {
         
+        if validateNewCity(value) {
+            model.cities.append(value)
+            self._view.reloadList()
+            
+            PersistedDataManager.saveCities(cities: model.cities)
+            getCurrentTemperature()
+        }
+    }
+    
+  
+    
+    private func validateNewCity(_ value: City) -> Bool {
+        let result = model.cities.contains(where: {$0.id == value.id})
+    
+        return !result
+    }
+    
+    func getSelectedCity(index: Int) -> City {
+        return model.cities[index]
+    }
+    
+    func resetCityTemp() {
         
+        let cities = model.cities
+        for (x,_) in cities.enumerated() {
+            model.cities[x].temp = nil
+        }
+        self._view.reloadList()
         
     }
+    
 }

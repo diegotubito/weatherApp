@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IcI-oK-ZQO">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Chosen City List View Controller-->
+        <scene sceneID="mHN-qi-CdJ">
+            <objects>
+                <viewController id="IcI-oK-ZQO" customClass="ChosenCityListViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KJI-QO-2Ic">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cyL-XS-1WZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="IcI-oK-ZQO" id="epP-v6-Rl1"/>
+                                    <outlet property="delegate" destination="IcI-oK-ZQO" id="1af-Vy-KxH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cyL-XS-1WZ" firstAttribute="top" secondItem="AHJ-tF-2Jj" secondAttribute="top" id="LUh-KS-TWI"/>
+                            <constraint firstItem="AHJ-tF-2Jj" firstAttribute="trailing" secondItem="cyL-XS-1WZ" secondAttribute="trailing" id="MW3-Us-mb6"/>
+                            <constraint firstItem="AHJ-tF-2Jj" firstAttribute="bottom" secondItem="cyL-XS-1WZ" secondAttribute="bottom" id="Q11-TR-Dj1"/>
+                            <constraint firstItem="cyL-XS-1WZ" firstAttribute="leading" secondItem="AHJ-tF-2Jj" secondAttribute="leading" id="uVe-sA-0Ru"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="AHJ-tF-2Jj"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="cyL-XS-1WZ" id="s1d-Td-zbt"/>
+                        <segue destination="KX5-Sq-EXm" kind="show" identifier="segue_to_detail" id="2RB-xA-v8u"/>
+                        <segue destination="Hnm-uu-q2d" kind="show" identifier="segue_to_add_city" id="0lR-xN-bs3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dFc-rq-mkD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="46" y="84"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="fX6-PF-8Vs">
+            <objects>
+                <viewController id="KX5-Sq-EXm" customClass="DetailViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wk9-2J-VQV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RpA-jv-eaV">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="KX5-Sq-EXm" id="HbL-Gy-oEE"/>
+                                    <outlet property="delegate" destination="KX5-Sq-EXm" id="aPE-22-ICO"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7FP-gG-kVd" firstAttribute="bottom" secondItem="RpA-jv-eaV" secondAttribute="bottom" id="Iag-37-rgv"/>
+                            <constraint firstItem="RpA-jv-eaV" firstAttribute="top" secondItem="7FP-gG-kVd" secondAttribute="top" id="Ke1-8V-xbl"/>
+                            <constraint firstItem="7FP-gG-kVd" firstAttribute="trailing" secondItem="RpA-jv-eaV" secondAttribute="trailing" id="rUS-mQ-D7T"/>
+                            <constraint firstItem="RpA-jv-eaV" firstAttribute="leading" secondItem="7FP-gG-kVd" secondAttribute="leading" id="xvA-ef-DkE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7FP-gG-kVd"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="RpA-jv-eaV" id="K6A-T2-U3W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Foo-Fq-3e7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1161" y="-194"/>
+        </scene>
+        <!--Add City View Controller-->
+        <scene sceneID="fWK-3q-mSY">
+            <objects>
+                <viewController id="Hnm-uu-q2d" customClass="AddCityViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eng-hF-3eM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="LDo-hf-LUe">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Hnm-uu-q2d" id="QCu-Z1-c0X"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dGu-Mg-6oq">
+                                <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Hnm-uu-q2d" id="DXQ-fa-Qy8"/>
+                                    <outlet property="delegate" destination="Hnm-uu-q2d" id="8Ff-jC-B0J"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yeH-rg-vHm" firstAttribute="bottom" secondItem="dGu-Mg-6oq" secondAttribute="bottom" id="Ej6-Kk-JKp"/>
+                            <constraint firstItem="dGu-Mg-6oq" firstAttribute="top" secondItem="LDo-hf-LUe" secondAttribute="bottom" id="Iod-2x-VID"/>
+                            <constraint firstItem="dGu-Mg-6oq" firstAttribute="leading" secondItem="yeH-rg-vHm" secondAttribute="leading" id="Mp0-fF-C4g"/>
+                            <constraint firstItem="yeH-rg-vHm" firstAttribute="trailing" secondItem="dGu-Mg-6oq" secondAttribute="trailing" id="dVS-ov-d3d"/>
+                            <constraint firstItem="LDo-hf-LUe" firstAttribute="trailing" secondItem="yeH-rg-vHm" secondAttribute="trailing" id="fvB-5c-lXS"/>
+                            <constraint firstItem="LDo-hf-LUe" firstAttribute="top" secondItem="yeH-rg-vHm" secondAttribute="top" id="qXi-A7-hU6"/>
+                            <constraint firstItem="LDo-hf-LUe" firstAttribute="leading" secondItem="yeH-rg-vHm" secondAttribute="leading" id="tOV-Ej-txi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yeH-rg-vHm"/>
+                    </view>
+                    <connections>
+                        <outlet property="mySearchBar" destination="LDo-hf-LUe" id="gW9-8k-01d"/>
+                        <outlet property="tableView" destination="dGu-Mg-6oq" id="UGE-v9-Zim"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Zv-bN-b9W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1161" y="466"/>
+        </scene>
+    </scenes>
+</document>

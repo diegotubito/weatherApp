@@ -9,12 +9,17 @@
 import Foundation
 
 protocol DetailViewModelContract {
-    init(withView view: DetailViewContract)
+    init(withView view: DetailViewContract, service: ServiceManager)
     
     var model : DetailModel! {get}
+    func setSelectedRegister(_ value: City)
+    func loadExtended(days: Int) 
 }
 
 protocol DetailViewContract {
     func showLoading()
     func hideLoading()
+    func showError(_ message: String)
+    func showSuccess()
+    
 }

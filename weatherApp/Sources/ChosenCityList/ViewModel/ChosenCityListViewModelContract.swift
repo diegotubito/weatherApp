@@ -13,6 +13,9 @@ protocol ChosenCityListViewModelContract {
     init(withView view: ChosenCityListViewContract, services: ServiceManager)
     var model : ChosenCityListModel! {get}
     func loadStoreCities()
+    func addNewCity(_ value: City)
+    func getSelectedCity(index: Int) -> City
+    func resetCityTemp()
     
 }
 
@@ -20,5 +23,6 @@ protocol ChosenCityListViewContract {
     func showLoading()
     func hideLoading()
     func showError(_ errorMessage: String)
+    func reloadList()
 
 }

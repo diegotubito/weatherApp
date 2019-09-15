@@ -11,7 +11,3 @@ import Foundation
 class ChosenCityListModel {
     var cities = [City]()
 }
-
-class City {
-    var name : String?
-}

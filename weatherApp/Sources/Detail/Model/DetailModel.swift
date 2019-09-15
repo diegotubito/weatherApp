@@ -9,5 +9,7 @@
 import Foundation
 
 class DetailModel {
+    var selectedRegister : City!
+    var registers = [WeatherGeneral]()
     
 }

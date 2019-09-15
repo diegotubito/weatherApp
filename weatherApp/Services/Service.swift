@@ -68,26 +68,26 @@ enum ServiceError : Error{
 
 extension ServiceManager: ServiceManagerProtocol {
     
-    struct Weather : Decodable {
-        var id: Int?
-        var name : String?
-        
-        var main = MainData()
-        
-    }
+    public typealias completionAlias = ([[String:Any]]) -> ()
+    public typealias failAlias =  (String) -> ()
     
-    struct MainData: Decodable {
-        var humidity: Int?
-        var pressure : String?
-        var temp : String?
-    }
-    
-    struct Wind: Decodable {
-        var deg : String?
-        var speed : String?
+    func retrieveFromJSONFile(name: String, completion: completionAlias, fail: failAlias) {
+        if let path = Bundle.main.path(forResource: name, ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+                if let jsonResult = jsonResult as? [[String: Any]] {
+                    // do stuff
+                    completion(jsonResult)
+                }
+            } catch {
+                // handle error
+                fail(error.localizedDescription)
+            }
+        }
     }
    
-    func retrieveData(url: String, result: @escaping(ServiceManager.Weather?, Error?) -> Void){
+    func retrieveData(url: String, result: @escaping(City?, Error?) -> Void){
         let request: NSMutableURLRequest = NSMutableURLRequest(url: NSURL(string: url)! as URL)
         request.httpMethod = "GET"
         let session = URLSession.shared
@@ -104,12 +104,7 @@ extension ServiceManager: ServiceManagerProtocol {
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                
                 let parsedData = self.parse(json)
-                
-                let a = try JSONDecoder().decode(ServiceManager.Weather.self, from: data)
-                print(a.name)
-                print(a.main.humidity)
                 result(parsedData, nil)
             } catch {
                 result(nil, error)
@@ -119,23 +114,45 @@ extension ServiceManager: ServiceManagerProtocol {
         task.resume()
     }
     
-    private func parse(_ json: [String : Any]?) -> Weather? {
+    private func parse(_ json: [String : Any]?) -> City? {
         guard json != nil else {
             return nil
         }
         
-        var result = Weather()
-        result.name = json?["name"] as? String
+        var result = City()
+        result.city_name = json?["city_name"] as? String
         result.id = json?["id"] as? Int
-        if let main = json?["main"] as? [String: Any] {
-            for (key,value) in main {
-                if key == "pressure" {
-                    result.main.pressure = value as? String
-                }
-            }
-        }
+       
         return result
         
     }
+    
+    
+    func retrieveJSON(url: String, result: @escaping([String : Any]?, Error?) -> Void){
+        let request: NSMutableURLRequest = NSMutableURLRequest(url: NSURL(string: url)! as URL)
+        request.httpMethod = "GET"
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            
+            guard error == nil else {
+                result(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+                result(json, nil)
+            } catch {
+                result(nil, error)
+            }
+            
+        })
+        task.resume()
+    }
+    
 }
 

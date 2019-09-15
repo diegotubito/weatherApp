@@ -10,6 +10,8 @@
 		6576C208232931BE00A1C131 /* commonValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576C207232931BE00A1C131 /* commonValues.swift */; };
 		6576C20B23295BFA00A1C131 /* ExtendedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576C20923295BFA00A1C131 /* ExtendedCell.swift */; };
 		6576C20C23295BFA00A1C131 /* ExtendedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6576C20A23295BFA00A1C131 /* ExtendedCell.xib */; };
+		658045D1232EC7C000B30320 /* MockServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658045D0232EC7C000B30320 /* MockServiceManager.swift */; };
+		658045D3232EC86B00B30320 /* TestServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658045D2232EC86B00B30320 /* TestServiceManager.swift */; };
 		6595C2DF2322B20600921472 /* Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6595C2DE2322B20600921472 /* Weather.storyboard */; };
 		6595C2E62322B34100921472 /* CityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6595C2E52322B34100921472 /* CityListViewController.swift */; };
 		6595C2E82322B3B600921472 /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6595C2E72322B3B600921472 /* CityListViewModel.swift */; };
@@ -56,6 +58,8 @@
 		6576C207232931BE00A1C131 /* commonValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonValues.swift; sourceTree = "<group>"; };
 		6576C20923295BFA00A1C131 /* ExtendedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedCell.swift; sourceTree = "<group>"; };
 		6576C20A23295BFA00A1C131 /* ExtendedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExtendedCell.xib; sourceTree = "<group>"; };
+		658045D0232EC7C000B30320 /* MockServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceManager.swift; sourceTree = "<group>"; };
+		658045D2232EC86B00B30320 /* TestServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestServiceManager.swift; sourceTree = "<group>"; };
 		6595C2DE2322B20600921472 /* Weather.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Weather.storyboard; sourceTree = "<group>"; };
 		6595C2E52322B34100921472 /* CityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewController.swift; sourceTree = "<group>"; };
 		6595C2E72322B3B600921472 /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
@@ -117,6 +121,23 @@
 				6576C207232931BE00A1C131 /* commonValues.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		658045CE232EC76A00B30320 /* APIClient */ = {
+			isa = PBXGroup;
+			children = (
+				658045D2232EC86B00B30320 /* TestServiceManager.swift */,
+				658045CF232EC7A400B30320 /* Mocks */,
+			);
+			path = APIClient;
+			sourceTree = "<group>";
+		};
+		658045CF232EC7A400B30320 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				658045D0232EC7C000B30320 /* MockServiceManager.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		6595C2E02322B2DE00921472 /* CityList */ = {
@@ -295,6 +316,7 @@
 		65B46965231B40AA00B8E442 /* weatherAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				658045CE232EC76A00B30320 /* APIClient */,
 				65B46966231B40AA00B8E442 /* weatherAppTests.swift */,
 				65B46968231B40AA00B8E442 /* Info.plist */,
 			);
@@ -494,6 +516,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B46967231B40AA00B8E442 /* weatherAppTests.swift in Sources */,
+				658045D1232EC7C000B30320 /* MockServiceManager.swift in Sources */,
+				658045D3232EC86B00B30320 /* TestServiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

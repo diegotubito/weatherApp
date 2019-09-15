@@ -172,6 +172,14 @@ extension ChosenCityListViewController: UITableViewDataSource {
     }
     
     
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.viewModel.model.cities.remove(at: indexPath.row)
+            PersistedDataManager.saveCities(cities: self.viewModel.model.cities)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 }
 
 
@@ -180,4 +188,5 @@ extension ChosenCityListViewController: UITableViewDelegate {
         performSegue(withIdentifier: "segue_to_detail", sender: viewModel.model.cities[indexPath.row])
         
     }
+  
 }
